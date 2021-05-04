@@ -13,7 +13,7 @@ Q.switchCoordinateSystem = function(id) {
 	Q.coordSysTagFilter.setCoordSystem(id);
 	Q.mapController.onCoordinateSystemChanged(coordSys);
 	Q.currentCoordinateSystem = coordSys;
-	
+
 	Q.tagDataRetriever.setCoordinateSystemRequestFilter(coordSys.id);
 };
 
@@ -22,11 +22,11 @@ Q.init2DMap = function() {
 		Q.mapController.uninit();
 	Q.coordSysTagFilter.removeListener(Q.mapController);
 	Q.selectionManager.removeListener(Q.mapController);
-	
+
 	$("#mapPanel").empty();
 	var newCanvas = $('<canvas id="mapCanvas" class="mapPanel">Your browser does not support the HTML5 canvas tag.</canvas>');
 	$('#mapPanel').append(newCanvas);
-	
+
 	Q.mapController = new Q.Map2DController(Q.coordSysTagFilter, Q.selectionManager);
 	Q.coordSysTagFilter.addListener(Q.mapController);
 	Q.selectionManager.addListener(Q.mapController);
@@ -40,9 +40,9 @@ Q.init3DMap = function() {
 		Q.mapController.uninit();
 	Q.coordSysTagFilter.removeListener(Q.mapController);
 	Q.selectionManager.removeListener(Q.mapController);
-	
+
 	$("#mapPanel").empty();
-	
+
 	Q.mapController = new Q.Map3DController(Q.coordSysTagFilter, Q.selectionManager);
 	Q.coordSysTagFilter.addListener(Q.mapController);
 	Q.selectionManager.addListener(Q.mapController);
@@ -64,7 +64,7 @@ function main() {
 	Q.selectionManager.addListener(treeController);
 
 	Q.init2DMap();
-	
+
 	Q.selectionManager.addListener({
 		onSelectionAdd: function(obj) {
 			var t = datamodel.getTag(obj.id);
@@ -75,7 +75,7 @@ function main() {
 			}
 		}
 	});
-	
+
 	datamodel.addListener({
 		onTagsUpdate: function(tags) {
 			for(var i = 0; i < tags.length; i++) {
@@ -101,13 +101,13 @@ function main() {
 			}
 		}
 	})
-	
+
 
 	Q.coordinateSystems = {};
-	
+
 	// fetch project data (coordinate systems, background images etc.)
 	jQuery.ajax({
-		url : "../getProjectInfo?version=2",
+		url : "/api/qpe/getProjectInfo?version=2",
 		dataType : 'json',
 		async : true,
 		success : function (data, textStatus, jqXHR) {
@@ -115,7 +115,7 @@ function main() {
 			data = data.coordinateSystems;
 			if(data === undefined)
 				return;
-			
+
 			// sort coordinate systems by name
 			data.sort(function(a,b){
 				return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0);
@@ -127,7 +127,7 @@ function main() {
 				// put it in map datastructure (for easier lookups later)
 				Q.coordinateSystems[data[i].id] = data[i];
 			}
-			
+
 			// as backgroundimages used in other coordinates systems do not appear "natively" under that coordinatesystem, we need to add a reference to it
 			for(var i = 0; i < data.length; i++) {
 				for(var j = 0; j < data[i].backgroundImages.length; j++) {
@@ -140,12 +140,12 @@ function main() {
 							var cs = Q.coordinateSystems[csID];
 							if(cs !== undefined) {
 								cs.backgroundImages.push(bg);
-							}							
+							}
 						}
 					}
 				}
 			}
-			
+
 			if(data.length > 0) {
 				// select the first coordinate system to be shown first
 				Q.switchCoordinateSystem(data[0].id);
@@ -171,20 +171,20 @@ function main() {
 		var id = $("#coordSysSelect option:selected").attr('id');
 		Q.switchCoordinateSystem(id);
 	});
-	
+
 	$("#tagSortButton").click(function() {
 		datamodel.sort();
 	});
-	
+
 	$("#show2DMap").click(function() {
 		Q.init2DMap();
 	});
-	
+
 	$("#show3DMap").click(function() {
 		Q.init3DMap();
 	});
-	
-	
+
+
 	var dragStartPosX;
 	var leftPaneStartW;
 	var rightPaneStartW;
@@ -220,10 +220,10 @@ function main() {
 				$(window).unbind("mousemove");
 				$(window).unbind("mouseup");
 			});
-			
+
 		}
 	});
-	
+
 	var el = document.getElementById("drawer");
 	var onTouchMove = function(e) {
 		e.preventDefault();
@@ -262,7 +262,7 @@ function main() {
 	}, false);
 	//el.addEventListener("touchcancel", handleCancel, false);
 
-	
+
 //	$("#drawer").click(function() {
 //		$("#leftPane").toggle();
 //		if ($("#leftPane").is(":visible")) {
@@ -277,7 +277,7 @@ function main() {
 		return this.indexOf(suffix, this.length - suffix.length) !== -1;
 	};
 
-	
+
 	Q.createAgoString = function(d) {
 		if(d < 1000)
 			return d + " ms";
@@ -294,12 +294,12 @@ function main() {
 	Q.createDisplayDate = function(d) {
 		return d.getHours() + ":" + d.getMinutes() + "." + d.getSeconds();
 	}
-	
+
 	function componentToHex(c) {
 	    var hex = c.toString(16);
 	    return hex.length == 1 ? "0" + hex : hex;
 	}
-	
+
 	Q.rgbToHex = function(r, g, b) {
 	    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 	}

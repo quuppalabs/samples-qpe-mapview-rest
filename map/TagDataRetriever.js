@@ -8,7 +8,7 @@ Q.TagDataRetriever = function(updateInterval) {
 	this.__lastNotificationShownTS = 0;
 	this.__coordSysID = undefined;
 	this.updateInterval = updateInterval;
-	
+
 	var that = this;
 
 	parseTagData = function(data, textStatus, jqXHR) {
@@ -17,10 +17,10 @@ Q.TagDataRetriever = function(updateInterval) {
 		data = data.tags;
 		var addedTags = [];
 		var updatedTags = [];
-		
-		for(var i = 0; i < that.__tagList.length; i++) 
+
+		for(var i = 0; i < that.__tagList.length; i++)
 			that.__tagList[i].__toBeRemovedFlag = true;  // raise the flag so that we know which previous tag do not exist anymore and should be removed.
-	
+
 		for(var i = 0; i < data.length; i++) {
 			var tag = data[i];
 			//var localTag = that.__tagMap[tag.tagId];
@@ -36,7 +36,7 @@ Q.TagDataRetriever = function(updateInterval) {
 					if(this.data && this.data.locationTS) {
 						posAge = now-this.data.locationTS;
 						if (this.data.location !== undefined && this.data.location !== null)
-							return { 
+							return {
 								x: this.data.location[0],
 								y: this.data.location[1],
 								z: this.data.location[2],
@@ -44,10 +44,10 @@ Q.TagDataRetriever = function(updateInterval) {
 								age: posAge,
 								coordSystem: this.data.locationCoordSysId,
 								coordSystemName: this.data.locationCoordSysName};
-					}						
+					}
 					return undefined;
 				};
-				
+
 				// create observer pattern for tag
 				localTag.__observers = [];
 				localTag.subscribe = function(fn) {
@@ -66,7 +66,7 @@ Q.TagDataRetriever = function(updateInterval) {
 			    }
 				localTag.__visible = true;
 				localTag.__autoFollow = false;
-				
+
 				//that.__tagMap[tag.tagId] = localTag;
 				that.__tagList.push(localTag);
 				addedTags.push(localTag);
@@ -78,7 +78,7 @@ Q.TagDataRetriever = function(updateInterval) {
 			localTag.serverTime = serverTime;
 			localTag.__toBeRemovedFlag = false;
 		}
-		
+
 		// collect all tags-to-be-removed
 		var removedTags = [];
 		for(var i = 0; i < that.__tagList.length; i++) {
@@ -95,8 +95,8 @@ Q.TagDataRetriever = function(updateInterval) {
 			}
 			//delete that.__tagMap[t.id];
 		}
-		
-				
+
+
 		// notify listeners
 		for (var l = 0; l < that.__listeners.length; l++) {
 			var listener = that.__listeners[l];
@@ -110,13 +110,13 @@ Q.TagDataRetriever = function(updateInterval) {
 				listener.onTagUpdateFinished();
 		}
 	};
-	
+
 	printTagStats = function(data) {
 		data = data.tags;
 		var tagsWithPositionCount = 0;
 		var tagsWithProximityCount = 0;
 		var tagsWithPresenseCount = 0;
-		
+
 		for(var i = 0; i < data.length; i++) {
 			var t = data[i];
 			if(t.locationType === "position") {
@@ -150,7 +150,7 @@ Q.TagDataRetriever.prototype.sort = function() {
 		var idB = (b.data && b.data.tagName) || b.id;
 		return idA.localeCompare(idB);
 	});
-	
+
 	for (var l = 0; l < this.__listeners.length; l++) {
 		if (this.__listeners[l].onTagsRemove != undefined)
 			this.__listeners[l].onTagsRemove(this.__tagList);
@@ -186,7 +186,7 @@ Q.TagDataRetriever.prototype.__pollTagInfo = function(o) {
 	var that = this;
 	// do poll for tag data
 	jQuery.ajax({
-		url : "../getTagData?format=defaultLocationAndInfo&" + filter + q,
+		url : "/api/qpe/getTagData?format=defaultLocationAndInfo&" + filter + q,
 		dataType : 'json',
 		async : true,
 		success : function(data, textStatus, jqXHR) {
