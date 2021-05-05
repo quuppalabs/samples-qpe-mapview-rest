@@ -191,7 +191,7 @@ Q.TagDataRetriever.prototype.__pollTagInfo = function(o) {
 	var that = this;
 	// do poll for tag data
 	jQuery.ajax({
-		url : "/api/qpe/getTagData?format=defaultLocationAndInfo&" + filter + q,
+		url : Q.settings.buildApiUrl("../", "getTagData?format=defaultLocationAndInfo&" + filter + q),
 		dataType : 'json',
 		async : true,
 		success : function(data, textStatus, jqXHR) {

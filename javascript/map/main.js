@@ -112,7 +112,7 @@ function main() {
 
 	// fetch project data (coordinate systems, background images etc.)
 	jQuery.ajax({
-		url : "/api/qpe/getProjectInfo?version=2",
+		url : Q.settings.buildApiUrl("../", "getProjectInfo?version=2"),
 		dataType : 'json',
 		async : true,
 		success : function (data, textStatus, jqXHR) {

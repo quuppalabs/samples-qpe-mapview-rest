@@ -7,6 +7,17 @@ At your own cost and risk, you may use, modify, and redistribute, without attrib
  var Q = Q || {};
 Q.settings = function() {
 	var that = {};
+
+	// relPath is the relative path from html file where call is made,
+	// to the folder where settings.js is.
+	// that.buildApiUrl = function (relPath, apiPath) {
+	//	return relPath + apiPath;
+	// };
+	// for serving under qpe-next /ext path, and v0 api in /api/qpe/
+	that.buildApiUrl = function (relPath, apiPath) {
+	 	return '/api/qpe/' + apiPath;
+	};
+
 	that.useSmoothing = true;
 	//that.smoothing = 0.8;
 	that.centerOnSelected = false;
