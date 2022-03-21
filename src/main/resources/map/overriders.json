@@ -10,6 +10,6 @@
 		"visible": false
 	},
 	"dummyTagNameOrId": {
-		"imageSrc": "../images/shoppingBasket.png"
+		"imageSrc": "images/shoppingBasket.png"
 	}
 }
