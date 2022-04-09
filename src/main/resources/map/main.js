@@ -26,7 +26,8 @@ Q.getParameter = function(paramName) {
 
 // Default API prefix, depends on where the map files are loaded from vs where the API is. 
 // Can also use absolute URL but make sure you have apiToken and this origin allowed for CORS 
-Q.apiPathPrefix = unescape(Q.getParameter('apiPathPrefix'));
+Q.apiPathPrefix = Q.getParameter('apiPathPrefix');
+if (Q.apiPathPrefix != undefined) Q.apiPathPrefix = unescape(Q.apiPathPrefix);
 Q.apiToken = Q.getParameter('apiToken');
 Q.currentCoordinateSystem === undefined;
 
@@ -79,7 +80,7 @@ Q.init3DMap = function() {
 };
 
 function main(apiPathPrefix) {
-	if (apiPathPrefix !== undefined && Q.apiPathPrefix == undefined) Q.apiPathPrefix = apiPathPrefix;
+	if (apiPathPrefix != undefined && Q.apiPathPrefix == undefined) Q.apiPathPrefix = apiPathPrefix;
 	Q.notificationManager = new Q.NotificationManager();
 	Q.selectionManager = new Q.SelectionManager();
 	Q.tagDataRetriever = new Q.TagDataRetriever(100);
