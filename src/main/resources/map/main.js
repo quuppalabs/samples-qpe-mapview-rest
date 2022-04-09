@@ -11,9 +11,23 @@
 // limitations under the License.
 
 var Q = Q || {};
+Q.getParameter = function(paramName) {
+  var searchString = window.location.search.substring(1),
+      i, val, params = searchString.split("&");
 
-// Default API prefix, depends on where the map files are loaded from vs where the API is 
-Q.apiPathPrefix = '../';
+  for (i=0;i<params.length;i++) {
+    val = params[i].split("=");
+    if (val[0] == paramName) {
+      return val[1];
+    }
+  }
+  return null;
+};
+
+// Default API prefix, depends on where the map files are loaded from vs where the API is. 
+// Can also use absolute URL but make sure you have apiToken and this origin allowed for CORS 
+Q.apiPathPrefix = unescape(Q.getParameter('apiPathPrefix'));
+Q.apiToken = Q.getParameter('apiToken');
 Q.currentCoordinateSystem === undefined;
 
 Q.switchCoordinateSystem = function(id) {
@@ -65,7 +79,7 @@ Q.init3DMap = function() {
 };
 
 function main(apiPathPrefix) {
-	if (apiPathPrefix !== undefined) Q.apiPathPrefix = apiPathPrefix;
+	if (apiPathPrefix !== undefined && Q.apiPathPrefix == undefined) Q.apiPathPrefix = apiPathPrefix;
 	Q.notificationManager = new Q.NotificationManager();
 	Q.selectionManager = new Q.SelectionManager();
 	Q.tagDataRetriever = new Q.TagDataRetriever(100);
@@ -123,6 +137,7 @@ function main(apiPathPrefix) {
 	// fetch project data (coordinate systems, background images etc.)
 	jQuery.ajax({
 		url : Q.buildApiUrl(Q.apiPathPrefix, "getProjectInfo?version=2"),
+		headers: Q.apiToken === undefined ? {} : {"Authorization": "Bearer " + Q.apiToken},		
 		dataType : 'json',
 		async : true,
 		success : function (data, textStatus, jqXHR) {
