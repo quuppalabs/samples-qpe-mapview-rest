@@ -1,13 +1,13 @@
-# qpe-mapview-rest
+# samples-qpe-mapview-rest
 
-A sample map view visualisation that uses the Quuppa REST APIs to pull data from the Quuppa Positioning Engine (QPE). This is the same map view implementation that is used in our classic QPE Web Console and made available as a sample when you download the Quuppa software package from the Quuppa Customer Portal at https://secure.quuppa.com/. You can use it as a base when building your own application layers on top of the Quuppa technology platform. 
+A sample map view visualisation that uses the Quuppa REST APIs to pull data from the Quuppa Positioning Engine (QPE). This is the same map view implementation that is used in our *classic* QPE Web Console and made available as a sample when you download the Quuppa software package from the [Quuppa Customer Portal](https://secure.quuppa.com/). It is intended as a client side demo of what can be built on top of the Quuppa technology platform.
 
-This sample is compatible and can be run against any of the QPE setup options currently offered by Quuppa:
+This sample is compatible with and can be run against any of the QPE setup options currently offered by Quuppa:
 - The classic QPE, running on a local server
-- Our new docerized version of the QPE (i.e. QPE.next), running on a local server
-- A standablone server that is connected to API endpoints provided by a remote Quuppa Site Manager (QSM)
+- Our new dockerized version of the QPE (codenamed QPE.next), running on a local server
+- A standalone server that is connected to API endpoints provided by a remote Quuppa Site Manager (QSM)
 
-The dockerized QPE and the QSM are new tools that have been developed to simplify the deployment of Quuppa systems and to enable remote management of sites. For more information, please contact us directly. 
+The dockerized QPE and the QSM are new tools for simplifying the deployment of Quuppa systems and enabling remote management of sites. They are currently in beta testing and general availability launch is due later in 2022. For more information, please contact us directly.
 
 
 ## Getting Started  
@@ -20,7 +20,7 @@ The map view sample is already packaged into the classic QPE software and so you
 
 ### Run on the same host as a dockerized QPE
 
-As the map view sample is not automatically distributed as part of the dockerized QPE package, QPE.next, you'll need to complete the following steps to get started with the map view sample: 
+Since the map view sample is not distributed as part of the dockerized QPE package, you'll need to complete the following steps to get started with the map view sample: 
 
 1. Create a "bind mount", i.e. map one of the folders in your host operating system to the /var/qpe-ext folder inside the QPE docker instance. The files in this folder are available at the URL path /ext. For example, when the docker instance is configured to `--mount type=bind,source=<home.dir>/qpe-mapview-rest/src/main/resources,target=/var/qpe-ext` , the whole **map** folder is available at http://localhost:3000/ext/map/.
 
@@ -28,6 +28,7 @@ As the map view sample is not automatically distributed as part of the dockerize
 ```
   $(document).ready(start('../../v2/'));
 ```
+You can also supply the apiPathPrefix as a query parameters as noted in the following section.
 
 ### Run on a separate host against the QSM endpoint
 
