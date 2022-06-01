@@ -138,7 +138,7 @@ function main(apiPathPrefix) {
 	// fetch project data (coordinate systems, background images etc.)
 	jQuery.ajax({
 		url : Q.buildApiUrl(Q.apiPathPrefix, "getProjectInfo?version=2"),
-		headers: Q.apiToken === undefined ? {} : {"Authorization": "Bearer " + Q.apiToken},		
+		headers: Q.apiToken == undefined ? {} : {"Authorization": "Bearer " + Q.apiToken},		
 		dataType : 'json',
 		async : true,
 		success : function (data, textStatus, jqXHR) {
