@@ -39,7 +39,7 @@ Q.TreeController.prototype.__createHtml = function(tag) {
 				continue;
 			if (!Q.settings.showRawDataInTree && 
 					(key.endsWith("TS") || key.indexOf("__")==0 || key.indexOf("locationCoordSysId")==0 || key.indexOf("locationZoneIds")==0)) {
-				if(key !== "lastPacketTS" && key !== "button1LastPressTS")  // lastPacketTS & button1LastPressTS will be always shown...
+				if(key !== "lastSeenTS" && key !== "button1LastPressTS")  // lastSeenTS & button1LastPressTS will be always shown...
 					continue;
 			}
 			
@@ -64,7 +64,7 @@ Q.TreeController.prototype.__createHtml = function(tag) {
 				else
 					val = Q.createAgoString(tag.serverTime - tag.data["button1LastPressTS"]);
 			} else if(key.endsWith("TS")) {
-				if(key === "lastPacketTS")  // lastPacketTS will show 'ago' string as the actual value...
+				if(key === "lastPacketTS" || key === "lastSeenTS")  // lastPacketTS/lastSeenTS will show 'ago' string as the actual value...
 					val = Q.createAgoString(tag.serverTime - tag.data[key]);
 				else
 					agoString = Q.createDisplayDate(new Date(tag.data[key]));
