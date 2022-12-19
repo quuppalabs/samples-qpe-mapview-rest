@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>qpe-mapview-rest</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<name>QPE classic REST mapview sample</name>
 	<parent>
 		<groupId>com.quuppa</groupId>
@@ -12,7 +12,7 @@
 	
 	<scm>
 		<connection>scm:git:git@gitlab.com:quuppa/samples/qpe-mapview-rest.git</connection>
-		<tag>HEAD</tag>
+		<tag>qpe-mapview-rest-0.0.5</tag>
 		<url>https://gitlab.com/quuppa/samples/qpe-mapview-rest.git</url>
 	</scm>
 	
