@@ -115,7 +115,7 @@ Q.TagDrawable.prototype.draw = function (ctx, viewport, pass) {
 			// draw button pushed visualization (or simple black dot in middle if not pushed)
 			ctx.beginPath();
 			ctx.fillStyle = "#000000";
-			if(this.tag.data.button1State === 'pushed') {
+			if(this.tag.data.button1LastPressTS > this.tag.serverTime - 500) {
 				ctx.arc(pxPos[0], pxPos[1], 5, 0, Math.PI*2, false);
 			} else {
 				ctx.arc(pxPos[0], pxPos[1], 1, 0, Math.PI*2, false);
