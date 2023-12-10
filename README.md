@@ -36,7 +36,7 @@ When you run the map view sample on a spearate host using API endpoints provided
 
 1. Serve the map view files through a web server. For example, run `python3 -m http.server -d src/main/resources 8080` from the root folder where you cloned this project. 
 
-2. Create a new API for your QPE endpoint in the QSM and allow requests originating from your development machine, e.g. *http://localhost:8080* for Cross-Origin Resource Sharing (CORS). You can pass the endpoint url and the API token to the map view as query parameters like this: *http://localhost:8081/map/?apiToken=<token>&apiPathPrefix=https%3A%2F%2Fqsm1.quuppa.com%2Fqpe%2F<qpe-identity>%2Fv2%2F*.  
+2. Create a new API for your QPE endpoint in the QSM and allow requests originating from your development machine, e.g. *http://localhost:8080* for Cross-Origin Resource Sharing (CORS). You can pass the endpoint url and the API token to the map view as query parameters like this: *http://localhost:8081/map/?apiToken=<token>&apiPathPrefix=https%3A%2F%2Fqsm1.quuppa.com%2Fqpe%2F\<qpe-identity\>%2Fv2%2F*.  
 
 
 ## License
