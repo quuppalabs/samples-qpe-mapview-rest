@@ -192,7 +192,9 @@ Q.TagDataRetriever.prototype.setCoordinateSystemRequestFilter = function(coordSy
 
 
 Q.TagDataRetriever.prototype.__pollTagInfo = function(o) {
-	var q = o.__query;
+	var q = o.__query.split("&").filter(function (item) {
+       return item.startsWith("apiToken") !== true && item.startsWith("apiPathPrefix") !== true;
+    }).toString();
 	var filter = o.__coordSysID ? "coordSys="+o.__coordSysID + "&" : "";
 	var that = this;
 	// do poll for tag data
